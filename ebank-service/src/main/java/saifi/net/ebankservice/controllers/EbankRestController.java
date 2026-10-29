@@ -15,17 +15,17 @@ public class EbankRestController {
         this.ebankService = ebankService;
     }
 
-    @GetMapping("/BankAccount")
+    @GetMapping("/accounts")
     public List<BankAccount> getAllBankAccounts(){
         return ebankService.getAllBankAccounts();
     }
 
-    @GetMapping("/BankAccount/{id}")
+    @GetMapping("/accounts/{id}")
     public BankAccount getBankAccountById(@PathVariable String id){
         return ebankService.getBankAccountById(id);
     }
 
-    @PostMapping("/BankAccount")
+    @PostMapping("/accounts")
     public BankAccount saveBankAccount(@RequestBody BankAccount bankAccount){
         return ebankService.saveBankAccount(bankAccount);
     }
