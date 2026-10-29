@@ -3,6 +3,7 @@ package saifi.net.ebankservice.services;
 import org.springframework.stereotype.Service;
 import saifi.net.ebankservice.entities.BankAccount;
 import saifi.net.ebankservice.feign.CustomerRestClient;
+import saifi.net.ebankservice.model.Customer;
 import saifi.net.ebankservice.repository.BankAccountRepository;
 
 import java.util.Date;
@@ -31,8 +32,14 @@ public class EbankService {
     }
 
     public BankAccount saveBankAccount(BankAccount bankAccount){
-        bankAccount.setId(UUID.randomUUID().toString());
-        bankAccount.setCreatedAt(new Date());
-        return bankAccountRepository.save(bankAccount);
+        try{
+            Customer customer = customerRestClient.getCustomerById(bankAccount.getCustomerId());
+            bankAccount.setId(UUID.randomUUID().toString());
+            bankAccount.setCreatedAt(new Date());
+            return bankAccountRepository.save(bankAccount);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+
     }
 }
